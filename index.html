@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Här kommer ett projekt under min utbildning på ITHS att skrivas och dokumenteras">
+  <link rel="stylesheet" href="index.css">
+  <title>AL labb 2 JS</title>
+</head>
+
+<body>
+
+  <!-- Header som innehåller min navbar och även ett inloggningsformulär -->
+
+  <header>
+    <div id="login-modal">
+      <form action="POST" id="login-form" name="login">
+        <input type="text" name="user" placeholder="Användarnamn" id="name-input" required>
+        <input type="password" placeholder="Lösenord" id="password-input" required>
+        <button type="submit"></button>
+      </form>
+    </div>
+    <nav id="navbar">
+      <ul>
+        <li><a href="">Länk 1</a></li>
+        <li><a href="">Länk 2</a></li>
+        <li><a href="">Länk 3</a></li>
+        <li><a href="">Länk 4</a></li>
+      </ul>
+    </nav>
+    <input type="search" name="search" id="searchBar">
+  </header>
+
+  <!-- Main med allt innehåll -->
+
+  <main>
+    <section class="movie-carousel" id="movie-section-1"></section>
+    <section class="movie-carousel" id="movie-section-2"></section>
+    <section class="movie-carousel" id="movie-section-3"></section>
+  </main>
+
+  <!-- Footer med information om var jag har hämtat data, länkar till samtliga källor
+  och även "länkar" till sidans andra sociala medier -->
+
+  <footer>
+    <a href="#"></a>
+    <a href="#"></a>
+    <a href="#"></a>
+  </footer>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="index.js"></script>
+</body>
+
+</html>

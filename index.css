@@ -1,0 +1,65 @@
+/* Innehållsförteckning */
+/* 1. Root sätter standard för hemsidan */
+/* 2. Header med navbar */
+/* 3. Main med innehåll */
+/* 4. Footer med socials och information */
+/* 5. Media queries för responsitivitet */
+
+
+/* 1. Root */
+* {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+
+
+/* 2. Header med navbar och inlogg */
+#login-modal {
+  display: flex;
+  height: 40vh;
+  width: 50vw;
+  background-color: darkgrey;
+  border-radius: 8px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#login-form {
+  margin: auto;
+}
+
+
+#navbar {
+  height: 20vh;
+  background-color: aliceblue;
+  /* display: none; */
+}
+
+#navbar>ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+#navbar>ul>li>a {
+  background-color: white;
+  font-size: 2rem;
+  list-style: none;
+  text-decoration: none;
+  color: green;
+}
+
+
+
+/* 3. Main med innehåll */
+
+.movie-carousel {
+  margin: auto;
+  height: 25vh;
+  width: 80vw;
+  background-color: black;
+}
