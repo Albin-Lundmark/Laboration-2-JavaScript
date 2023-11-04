@@ -11,13 +11,14 @@
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 
 
 /* 2. Header med navbar och inlogg */
 #login-modal {
-  display: flex;
+  display: none;
   height: 40vh;
   width: 50vw;
   background-color: darkgrey;
@@ -58,8 +59,16 @@
 /* 3. Main med innehåll */
 
 .movie-carousel {
+  display: block;
   margin: auto;
+  height: 50vh;
+  width: 95vw;
+  background-color: grey;
+  /*   overflow-y: hidden;
+  overflow-x: scroll; */
+}
+
+.backdrop-image {
   height: 25vh;
-  width: 80vw;
-  background-color: black;
+  width: auto;
 }
