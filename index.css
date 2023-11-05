@@ -6,24 +6,36 @@
 /* 5. Media queries för responsitivitet */
 
 
-/* 1. Root */
+/* 1. Root och body */
+
 * {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   box-sizing: border-box;
+
+  /* Färger i variabler */
+
+  --grey: rgba(63, 54, 60, 1);
+  --pale-orange: rgba(191, 153, 120, 1);
+  --sand: rgba(216, 193, 173, 1);
+  --pale-brown: rgba(165, 126, 104, 1);
+  --black: rgba(12, 12, 12, 1);
 }
 
-
+body {
+  background-color: var(--grey);
+}
 
 /* 2. Header med navbar och inlogg */
+
 #login-modal {
   display: none;
   height: 40vh;
   width: 50vw;
-  background-color: darkgrey;
+  background-color: var(--grey);
   border-radius: 8px;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -33,42 +45,77 @@
   margin: auto;
 }
 
-
 #navbar {
-  height: 20vh;
-  background-color: aliceblue;
-  /* display: none; */
+  display: flex;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 15vh;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--grey);
+  transition: ease-in-out 0.3s;
 }
 
 #navbar>ul {
   display: flex;
+  width: 100%;
   flex-direction: row;
   justify-content: space-around;
+  align-items: center;
 }
 
 #navbar>ul>li>a {
-  background-color: white;
   font-size: 2rem;
   list-style: none;
   text-decoration: none;
-  color: green;
+  color: var(--sand);
 }
 
+#navbar>ul>li>a:hover {
+  font-size: 2.1rem;
+  background-color: var(--pale-orange);
+}
 
+#searchBar {
+  height: 10vh;
+  margin-right: 5vw;
+}
 
 /* 3. Main med innehåll */
 
+main {
+  margin-top: 20vh;
+}
+
 .movie-carousel {
-  display: block;
-  margin: auto;
+  display: flex;
+  margin-bottom: 10px;
   height: 50vh;
   width: 95vw;
-  background-color: grey;
-  /*   overflow-y: hidden;
-  overflow-x: scroll; */
+  background-color: var(--grey);
+  overflow-x: visible;
+}
+
+#movie-section1,
+#movie-section2,
+#movie-section3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  overflow-x: scroll;
+  list-style: none;
 }
 
 .backdrop-image {
-  height: 25vh;
-  width: auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  object-fit: fill;
+  border-radius: 8px;
+  border: solid 1px var(--black);
+  width: 20vw;
+  margin: 0.25rem;
 }

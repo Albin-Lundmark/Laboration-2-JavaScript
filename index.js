@@ -1,7 +1,15 @@
 /* Innehållsförteckning */
-/* 1. Variabler för fetch */
+/* 1. Login Modal */
+/* 2. Navbar */
+/* 3. Variabler för fetch() */
 
-/* 1. Variabler för fetch() */
+/* 1.Login Modal */
+
+/* 2. Navbar */
+
+
+
+/* 3. Variabler för fetch() */
 /* Här skapar jag variabler som innehåller metod och header för mina fetch() */
 
 const getMovies = async () => {
@@ -20,21 +28,21 @@ const getMovies = async () => {
     console.log(data)
     console.log(data.results[0].backdrop_path)
     const movieImgCar1 = await data.results.map((results) => {
-      return `<img class="backdrop-image" alt="movie-poster" src="https://themoviedb.org/t/p/original${results.backdrop_path}">`
+      return `<a href=""><img class="backdrop-image" alt="movie-poster" src="https://themoviedb.org/t/p/w220_and_h330_face${results.backdrop_path}"></a>`
     })
     movieCarousel1.innerHTML = movieImgCar1.join('')
 
     const response2 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options)
     const data2 = response2.data
     const movieImgCar2 = await data2.results.map((results) => {
-      return `<img class="backdrop-image" alt="movie-poster" src="https://themoviedb.org/t/p/original${results.backdrop_path}">`
+      return `<a href=""><img class="backdrop-image" alt="movie-poster" src="https://themoviedb.org/t/p/w220_and_h330_face${results.backdrop_path}"></a>`
     })
     movieCarousel2.innerHTML = movieImgCar2.join('')
 
     const response3 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=3', options)
     const data3 = response3.data
     const movieImgCar3 = await data3.results.map((results) => {
-      return `<li><img class="backdrop-image" alt="movie-poster" src="https://themoviedb.org/t/p/original${results.backdrop_path}"></li>`
+      return `<a href=""><img class="backdrop-image" alt="movie-poster" src="https://themoviedb.org/t/p/w220_and_h330_face${results.backdrop_path}"></a>`
     })
     movieCarousel3.innerHTML = movieImgCar3.join('')
   }
@@ -42,9 +50,7 @@ const getMovies = async () => {
     console.error('Fel:', error)
   }
 }
-
 getMovies()
-//getMovie()
 /* const searchMovie = () => {
   const searchInput = document.querySelector('#searchBar').addEventListener('input', (getMovie))
 
