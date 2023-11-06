@@ -89,24 +89,23 @@ main {
 }
 
 .movie-carousel {
-  display: flex;
   margin-bottom: 10px;
-  height: 50vh;
+  height: auto;
   width: 95vw;
   background-color: var(--grey);
-  overflow-x: visible;
 }
 
-#movie-section1,
-#movie-section2,
-#movie-section3 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  width: 100%;
+#movie-section-1,
+#movie-section-2,
+#movie-section-3 {
+  display: grid;
+  border: solid 2px;
+  gap: 1rem;
+  grid-auto-flow: column;
+  grid-auto-columns: 25%;
   overflow-x: scroll;
-  list-style: none;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 1rem;
 }
 
 .backdrop-image {
