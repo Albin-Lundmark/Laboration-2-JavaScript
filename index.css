@@ -13,36 +13,66 @@
   padding: 0;
   overflow-x: hidden;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 
   /* Färger i variabler */
 
-  --grey: rgba(63, 54, 60, 1);
-  --pale-orange: rgba(191, 153, 120, 1);
-  --sand: rgba(216, 193, 173, 1);
-  --pale-brown: rgba(165, 126, 104, 1);
-  --black: rgba(12, 12, 12, 1);
+  --grey: rgba(49, 42, 47, 1);
+  --pinkish: rgba(248, 194, 239);
+  --yellow: rgba(254, 243, 216, 1);
+  --white: rgba(253, 254, 255, 1);
+  --white-transparent: rgba(253, 254, 255, 0.8);
+  --red: rgba(91, 12, 18, 1);
+  --black: rgba(13, 4, 7, 1);
 }
 
 body {
   background-color: var(--grey);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* 2. Header med navbar och inlogg */
+/* 2. Header med inloggsmodal och navbar */
 
-#login-modal {
-  display: none;
-  height: 40vh;
-  width: 50vw;
+.login-modal {
+  display: flex;
+  background-image: url(/img/Movie-theatre-unsplash-Gwen-King.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 70vh;
+  width: 60vw;
   background-color: var(--grey);
   border-radius: 8px;
   position: fixed;
+  z-index: 99;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
+.hide {
+  display: none;
+}
+
 #login-form {
   margin: auto;
+}
+
+#password-input,
+#name-input {
+  font-size: 1.3rem;
+  border-radius: 6px;
+  filter: opacity(80%);
+  padding: 2px;
+  margin: 5px;
+  outline: none;
+  border: solid 2px var(--black);
+}
+
+#submit-btn {
+  background-color: var(--white-transparent);
+  font-size: 1.3rem;
+  cursor: pointer;
 }
 
 #navbar {
@@ -53,8 +83,8 @@ body {
   height: 15vh;
   justify-content: center;
   align-items: center;
-  background-color: var(--grey);
-  transition: ease-in-out 0.3s;
+  background-color: var(--red);
+  transition: top 0.3s;
 }
 
 #navbar>ul {
@@ -69,23 +99,41 @@ body {
   font-size: 2rem;
   list-style: none;
   text-decoration: none;
-  color: var(--sand);
+  color: var(--white);
+  transition: ease-in-out 0.3s;
+  cursor: pointer;
 }
 
 #navbar>ul>li>a:hover {
+  letter-spacing: 0.1rem;
   font-size: 2.1rem;
-  background-color: var(--pale-orange);
 }
 
 #searchBar {
   height: 10vh;
   margin-right: 5vw;
+  border-radius: 8px;
+  background-color: var(--grey);
+  filter: opacity(80%);
+  outline: none;
+  border: none;
 }
 
 /* 3. Main med innehåll */
 
 main {
   margin-top: 20vh;
+}
+
+#hero {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+}
+
+#hero>img {
+  height: 50vh;
+  width: 100vw;
+
 }
 
 .movie-carousel {

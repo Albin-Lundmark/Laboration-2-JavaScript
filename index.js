@@ -8,6 +8,7 @@
 /* 2. Navbar */
 
 //Navbar försvinner ovanför skärmen när man scrollar
+//Väljer ut navbar elementet från min HTML
 const navbar = document.querySelector('#navbar')
 const threshold = 50
 let scrollpos = window.scrollY || window.pageYOffset
