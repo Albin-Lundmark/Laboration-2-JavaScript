@@ -50,12 +50,18 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.hide {
+/* .hide {
   display: none;
-}
+} */
 
 #login-form {
   margin: auto;
+}
+
+#login-form>i {
+  margin-left: -12px;
+  z-index: 99;
+  cursor: pointer;
 }
 
 #password-input,
@@ -118,6 +124,7 @@ body {
   outline: none;
   border: none;
 }
+
 
 /* 3. Main med innehåll */
 
