@@ -18,7 +18,7 @@
   /* Färger i variabler */
 
   --grey: rgba(49, 42, 47, 1);
-  --pinkish: rgba(248, 194, 239);
+  --grey-transparent: rgba(65, 65, 65, 0.5);
   --yellow: rgba(254, 243, 216, 1);
   --white: rgba(253, 254, 255, 1);
   --white-transparent: rgba(253, 254, 255, 0.8);
@@ -87,20 +87,25 @@ body {
 
 .user,
 .pass {
-  margin-bottom: 10px;
   position: relative;
-  top: 50%;
 }
 
 #name-input,
 #password-input {
   font-size: 1.3rem;
   border-radius: 6px;
-  filter: opacity(80%);
+  filter: opacity(0.8);
   padding: 0.25rem;
   padding-right: 30px;
   margin-bottom: 0.75rem;
   border: solid 2px var(--black);
+}
+
+#name-input-active,
+#name-input:hover,
+#password-input:focus,
+#password-input:hover {
+  filter: opacity(1);
 }
 
 .pass>i {
@@ -119,18 +124,31 @@ body {
   padding: 0.25rem;
   border-radius: 8px;
   cursor: pointer;
+  transition: ease 200ms;
 }
 
-#guest-btn {
+#abort-btn {
   background-color: var(--white-transparent);
   font-size: 1.2rem;
-  padding: 0.2rem;
+  padding: 0.4rem 0.5rem 0.2rem 0.5rem;
   border-radius: 8px;
   cursor: pointer;
   position: absolute;
-  bottom: 10%;
-  left: 50%;
-  transform: translate(-50%, 0);
+  top: 2%;
+  right: 2%;
+  transition: ease 300ms;
+}
+
+#submit-btn:hover,
+#forgot-pass:hover {
+  color: var(--yellow);
+  background-color: var(--grey);
+  border: solid 2px var(--yellow);
+}
+
+#abort-btn:hover {
+  color: var(--white);
+  background-color: var(--red);
 }
 
 #navbar {
@@ -140,24 +158,35 @@ body {
   top: 0;
   width: 100%;
   height: 15vh;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border-bottom: solid 1px var(--black);
+  border-bottom: solid 2px var(--black);
   background-color: var(--red);
   transition: top 0.3s;
+  text-wrap: nowrap;
+}
+
+#login-btn {
+  margin: 0 1rem;
+  width: 20vw;
+  font-size: 1.5rem;
+  background-color: var(--red);
+  border: none;
+  border-radius: 8px;
+}
+
+#login-btn:hover {
+  border: solid 2px var(--black);
 }
 
 #navbar>ul {
   display: flex;
   width: 100%;
+  gap: 1rem;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: start;
   align-items: center;
 }
 
-#navbar>ul>li>a {
+.link {
   font-size: 2rem;
   list-style: none;
   text-decoration: none;
@@ -166,22 +195,23 @@ body {
   cursor: pointer;
 }
 
-#navbar>ul>li>a:hover {
+.link:hover {
   letter-spacing: 0.1rem;
   font-size: 2.1rem;
 }
 
-#searchBar {
-  height: 10vh;
+#search-bar {
+  position: relative;
+  height: 5vh;
   margin-right: 5vw;
   border-radius: 8px;
   background-color: var(--grey);
-  filter: opacity(80%);
-  border: solid 1px var(--pinkish);
+  filter: opacity(0.8);
+  border: solid 1px var(--white);
 }
 
 #search-btn {
-  margin-top: ;
+  margin-top: 2px;
   font-size: 2rem;
   cursor: pointer;
 }
@@ -189,31 +219,32 @@ body {
 /* 3. Main med innehåll */
 
 main {
-  margin-top: 20vh;
+  margin-top: 18vh;
 }
 
 #hero {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--white);
   text-align: center;
+  border-bottom: solid 0.25rem rgba(0, 0, 0, 0.7);
 }
 
 #hero>img {
-  height: 50vh;
+  height: 80vh;
   width: 100vw;
+}
+
+#site-title {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--white);
 }
 
 .carousel-wrapper {
   color: var(--white);
-  margin-left: 2vw;
-  margin-right: 3vw;
 }
 
 .movie-carousel {
   margin-bottom: 10px;
   height: auto;
-  width: 95vw;
-  background-color: var(--grey);
+  background-color: var(--grey-transparent);
 }
 
 #movie-section-1,
@@ -225,13 +256,16 @@ main {
   grid-auto-columns: 25%;
   overflow-x: scroll;
   scrollbar-width: thin;
-  padding: 1rem 1rem 0 1rem;
+  padding: 0.5rem 1rem 1rem 1rem;
 }
 
-.backdrop-image {
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+#movie-section-1>a,
+#movie-section-2>a,
+#movie-section-3>a {
+  text-decoration: none;
+}
+
+.poster-image {
   object-fit: fill;
   border-radius: 8px;
   border: solid 1.7px var(--black);
@@ -240,41 +274,74 @@ main {
 }
 
 .movie-title {
+  text-align: center;
   text-decoration: none;
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: var(--white);
 }
 
 /* 4. Footer med socials och information */
 
+footer {
+  height: 30vh;
+  width: auto;
+  background-color: var(--red);
+  border-top: solid 2px var(--black);
+  text-align: center;
+}
+
 /* 5. Media queries för responsitivitet */
 
 @media screen and (max-width: 660px) {
-  #login-form {
-    text-align: center;
-  }
+
+  /* 2. Header med modal och navbar */
 
   #password-input,
   #name-input {
     font-size: 0.8rem;
   }
 
+  #password-input:focus,
+  #name-input:focus {
+    filter: opacity(1);
+  }
+
   .pass>i {
-    top: 8px;
-    right: 15px;
+    top: 7px;
+    right: 18px;
     font-size: 0.8rem;
   }
 
-  #submit-btn {
+  #submit-btn,
+  #forgot-pass {
     font-size: 1rem;
   }
 
-  #guest-btn {
+  #abort-btn {
     font-size: 0.9rem;
     text-wrap: nowrap;
   }
 
-  #navbar {
-    font-size: 1rem;
+  .link {
+    font-size: 0.9rem;
+  }
+
+  /* 3. Main */
+
+  #hero {
+    font-size: 0.9rem;
+  }
+
+  #hero>img {
+    height: auto;
+  }
+
+  .carousel-wrapper {
+    font-size: 0.6rem;
+  }
+
+  .movie-title {
+    font-size: 0.7rem;
+
   }
 }
