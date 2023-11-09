@@ -6,69 +6,275 @@
 /* 5. Media queries för responsitivitet */
 
 
-/* 1. Root */
+/* 1. Root och body */
+
 * {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   box-sizing: border-box;
+  scroll-behavior: smooth;
+
+  /* Färger i variabler */
+
+  --grey: rgba(49, 42, 47, 1);
+  --pinkish: rgba(248, 194, 239);
+  --yellow: rgba(254, 243, 216, 1);
+  --white: rgba(253, 254, 255, 1);
+  --white-transparent: rgba(253, 254, 255, 0.8);
+  --red: rgba(91, 12, 18, 1);
+  --black: rgba(13, 4, 7, 1);
 }
 
+body {
+  background-color: var(--grey);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
+/* Ändrar på standard scrollbars för att få snyggare scrollbar under mina karuseller */
 
-/* 2. Header med navbar och inlogg */
-#login-modal {
-  display: none;
-  height: 40vh;
-  width: 50vw;
-  background-color: darkgrey;
+::-webkit-scrollbar {
+  width: 15px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--red);
+  border: 2px solid var(--black);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--yellow);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--white-transparent);
+  border: 1px solid var(--black);
+}
+
+/* 2. Header med inloggsmodal och navbar */
+
+.login-modal {
+  background-image: url(/img/Movie-theatre-unsplash-Gwen-King.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 70vh;
+  width: 60vw;
+  background-color: var(--grey);
   border-radius: 8px;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-#login-form {
-  margin: auto;
+.login-modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
+.form-wrapper {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+#login-form {
+  flex-direction: column;
+  margin: auto;
+  text-align: center;
+}
+
+.user,
+.pass {
+  margin-bottom: 10px;
+  position: relative;
+  top: 50%;
+}
+
+#name-input,
+#password-input {
+  font-size: 1.3rem;
+  border-radius: 6px;
+  filter: opacity(80%);
+  padding: 0.25rem;
+  padding-right: 30px;
+  margin-bottom: 0.75rem;
+  border: solid 2px var(--black);
+}
+
+.pass>i {
+  top: 10px;
+  right: 10px;
+  font-size: 1rem;
+  position: absolute;
+  color: var(--black);
+  cursor: pointer;
+}
+
+#submit-btn,
+#forgot-pass {
+  background-color: var(--white-transparent);
+  font-size: 1.3rem;
+  padding: 0.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#guest-btn {
+  background-color: var(--white-transparent);
+  font-size: 1.2rem;
+  padding: 0.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
 
 #navbar {
-  height: 20vh;
-  background-color: aliceblue;
-  /* display: none; */
+  display: flex;
+  position: fixed;
+  overflow-y: hidden;
+  top: 0;
+  width: 100%;
+  height: 15vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-bottom: solid 1px var(--black);
+  background-color: var(--red);
+  transition: top 0.3s;
 }
 
 #navbar>ul {
   display: flex;
+  width: 100%;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-around;
+  align-items: center;
 }
 
 #navbar>ul>li>a {
-  background-color: white;
   font-size: 2rem;
   list-style: none;
   text-decoration: none;
-  color: green;
+  color: var(--white);
+  transition: ease-in-out 0.3s;
+  cursor: pointer;
 }
 
+#navbar>ul>li>a:hover {
+  letter-spacing: 0.1rem;
+  font-size: 2.1rem;
+}
 
+#searchBar {
+  height: 10vh;
+  margin-right: 5vw;
+  border-radius: 8px;
+  background-color: var(--grey);
+  filter: opacity(80%);
+  border: solid 1px var(--pinkish);
+}
+
+#search-btn {
+  margin-top: ;
+  font-size: 2rem;
+  cursor: pointer;
+}
 
 /* 3. Main med innehåll */
 
-.movie-carousel {
-  display: block;
-  margin: auto;
+main {
+  margin-top: 20vh;
+}
+
+#hero {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--white);
+  text-align: center;
+}
+
+#hero>img {
   height: 50vh;
+  width: 100vw;
+}
+
+.carousel-wrapper {
+  color: var(--white);
+  margin-left: 2vw;
+  margin-right: 3vw;
+}
+
+.movie-carousel {
+  margin-bottom: 10px;
+  height: auto;
   width: 95vw;
-  background-color: grey;
-  /*   overflow-y: hidden;
-  overflow-x: scroll; */
+  background-color: var(--grey);
+}
+
+#movie-section-1,
+#movie-section-2,
+#movie-section-3 {
+  display: grid;
+  gap: 0.25rem;
+  grid-auto-flow: column;
+  grid-auto-columns: 25%;
+  overflow-x: scroll;
+  scrollbar-width: thin;
+  padding: 1rem 1rem 0 1rem;
 }
 
 .backdrop-image {
-  height: 25vh;
-  width: auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  object-fit: fill;
+  border-radius: 8px;
+  border: solid 1.7px var(--black);
+  width: 20vw;
+  margin: 0.25rem;
+}
+
+.movie-title {
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: var(--white);
+}
+
+/* 4. Footer med socials och information */
+
+/* 5. Media queries för responsitivitet */
+
+@media screen and (max-width: 660px) {
+  #login-form {
+    text-align: center;
+  }
+
+  #password-input,
+  #name-input {
+    font-size: 0.8rem;
+  }
+
+  .pass>i {
+    top: 8px;
+    right: 15px;
+    font-size: 0.8rem;
+  }
+
+  #submit-btn {
+    font-size: 1rem;
+  }
+
+  #guest-btn {
+    font-size: 0.9rem;
+    text-wrap: nowrap;
+  }
+
+  #navbar {
+    font-size: 1rem;
+  }
 }
