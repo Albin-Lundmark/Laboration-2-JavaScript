@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 
 <head>
   <meta charset="UTF-8">
@@ -16,23 +16,34 @@
   <!-- Header som innehåller min navbar och även ett inloggningsformulär -->
 
   <header>
-    <div class="login-modal hide">
-      <form action="POST" id="login-form" name="login">
-        <input type="text" name="user" placeholder="Username" id="name-input" required>
-        <input type="password" placeholder="Password" id="password-input" required>
-        <i class="fa-regular fa-eye-slash" style="color: white;"></i>
-        <button id="submit-btn" type="submit">Login</button>
-      </form>
-    </div>
+    <dialog data-modal class="login-modal">
+      <div class="form-wrapper">
+        <form id="login-form" name="login">
+          <div class="user">
+            <input id="name-input" type="text" name="user" placeholder="Användarnamn" required>
+          </div>
+          <div class="pass">
+            <input id="password-input" type="password" name="password" placeholder="Lösenord" required>
+            <i class="fa-regular fa-eye-slash"></i>
+          </div>
+          <button id="forgot-pass">Glömt lösenordet</button>
+          <button id="submit-btn" type="submit">Logga in</button>
+        </form>
+        <button data-close-modal id="guest-btn">Logga in som gäst</button>
+      </div>
+    </dialog>
     <nav id="navbar">
+      <button data-open-modal>Logga in</button>
       <ul>
         <li><a href="#">Länk 1</a></li>
         <li><a href="#">Länk 2</a></li>
         <li><a href="#">Länk 3</a></li>
         <li><a href="#">Länk 4</a></li>
       </ul>
-      <input type="search" name="search" id="searchBar">
-      <i class="fa-solid fa-magnifying-glass"></i>
+      <div>
+        <input type="search" name="search" id="searchBar">
+        <i id="search-btn" class="fa-solid fa-magnifying-glass"></i>
+      </div>
     </nav>
   </header>
 
@@ -43,18 +54,20 @@
       <h1>Albins filmerier</h1>
       <img src="/img/Projektor-alex-litvin-unsplash.jpg" alt="Projektor-alex-litvin-unsplash">
     </section>
-    <section class="movie-carousel">
-      <h2>Top 1-20</h2>
-      <div id="movie-section-1"></div>
-    </section>
-    <section class="movie-carousel">
-      <h2>Top 21-40</h2>
-      <div id="movie-section-2"></div>
-    </section>
-    <section class="movie-carousel">
-      <h2>Top 41-60</h2>
-      <div id="movie-section-3"></div>
-    </section>
+    <div class="carousel-wrapper">
+      <section class="movie-carousel">
+        <h2>Top 1-20</h2>
+        <div id="movie-section-1"></div>
+      </section>
+      <section class="movie-carousel">
+        <h2>Top 21-40</h2>
+        <div id="movie-section-2"></div>
+      </section>
+      <section class="movie-carousel">
+        <h2>Top 41-60</h2>
+        <div id="movie-section-3"></div>
+      </section>
+    </div>
   </main>
 
   <!-- Footer med information om var jag har hämtat data, länkar till samtliga källor

@@ -5,6 +5,17 @@
 
 /* 1.Login Modal */
 
+const modal = document.querySelector('.login-modal')
+const openModalBtn = document.querySelector('[data-open-modal]')
+const closeModalBtn = document.querySelector('[data-close-modal]')
+
+openModalBtn.addEventListener("click", () => {
+  modal.showModal()
+})
+closeModalBtn.addEventListener("click", () => {
+  modal.close()
+})
+
 /* 2. Navbar */
 
 //Navbar försvinner ovanför skärmen när man scrollar
@@ -51,7 +62,7 @@ const getMovies = async () => {
 
     //Skapar en variabel som mapar den inhämtade datan till en ny array som jag sedan kan plocka ut datan ifrån och visa upp
     const movieImgCar1 = await data.results.map((results) => {
-      return `<div><a href=""><img class="backdrop-image" alt="${results.original_title}" src="https://themoviedb.org/t/p/w220_and_h330_face${results.backdrop_path}"><p>${results.original_title}</p></a></div>`
+      return `<div><a href=""><img class="backdrop-image" alt="${results.original_title}" src="https://themoviedb.org/t/p/w220_and_h330_face${results.poster_path}"><p class="movie-title">${results.original_title}</p></a></div>`
     })
 
     //Kör metoden join() med en innerHTML för att skapa nya element
@@ -61,7 +72,7 @@ const getMovies = async () => {
     const response2 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options)
     const data2 = response2.data
     const movieImgCar2 = await data2.results.map((results) => {
-      return `<a href=""><img class="backdrop-image" alt="${results.original_title}" src="https://themoviedb.org/t/p/w220_and_h330_face${results.backdrop_path}"><p>${results.original_title}</p></a>`
+      return `<a href=""><img class="backdrop-image" alt="${results.original_title}" src="https://themoviedb.org/t/p/w220_and_h330_face${results.poster_path}"><p class="movie-title">${results.original_title}</p></a>`
     })
     movieCarousel2.innerHTML = movieImgCar2.join('')
 
@@ -69,7 +80,7 @@ const getMovies = async () => {
     const response3 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=3', options)
     const data3 = response3.data
     const movieImgCar3 = await data3.results.map((results) => {
-      return `<a href=""><img class="backdrop-image" alt="${results.original_title}" src="https://themoviedb.org/t/p/w220_and_h330_face${results.backdrop_path}"><p>${results.original_title}</p></a>`
+      return `<a href=""><img class="backdrop-image" alt="${results.original_title}" src="https://themoviedb.org/t/p/w220_and_h330_face${results.poster_path}"><p class="movie-title">${results.original_title}</p></a>`
     })
     movieCarousel3.innerHTML = movieImgCar3.join('')
   }
