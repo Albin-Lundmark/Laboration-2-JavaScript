@@ -18,8 +18,7 @@ closeModalBtn.addEventListener("click", () => {
   modal.close()
 })
 
-//Hämtar och lägger till lyssnare på mina inputs för att kunna spara data till localstorage
-//samt visa en personlig hälsning om man väljer att "logga in"
+//Hämtar alla element tillhörande formulär, inputs och errormeddelanden
 const userName = document.querySelector('#name-input')
 const password = document.querySelector('#password-input')
 const personalPage = document.querySelector('#site-title')
@@ -28,44 +27,87 @@ const lengthErr = document.querySelector('#txt-err')
 const numErr = document.querySelector('#num-err')
 const upperCaseErr = document.querySelector('#UC-err')
 const form = document.querySelector('#login-form')
+const info = document.querySelector('#info')
+
 
 //En funktion som kollar att lösenordsfältet innehåller vissa tecken
 //annars visas felmeddelanden
 const validate = () => {
-  let lengthValidation = /^.{5,}$/; // Minst 5 tecken
-  let numValidation = /\d/; // Minst en siffra
-  let upperCaseValidation = /[A-ZÅÄÖ]/; // Minst en stor bokstav
+  //Minst 5 tecken
+  let lengthValidation = /^.{5,}$/
+  //Minst en siffra
+  let numValidation = /\d/
+  //Minst en stor bokstav
+  let upperCaseValidation = /[A-ZÅÄÖ]/
+  //Boolean värde för att kunna returnera true eller false
+  let valid = true
   //Visa inga felmeddelanden till att börja med
-  lengthErr.style.display = 'none';
-  numErr.style.display = 'none';
-  err.style.display = 'none';
+  lengthErr.style.display = 'none'
+  numErr.style.display = 'none'
+  err.style.display = 'none'
+  upperCaseErr.style.display = 'none'
+  info.style.display = 'none'
   //Kollar om lösenordet innehåller vissa kriterier med metoden match()
   if (!password.value.match(lengthValidation)) {
-    err.style.display = 'block';
-    lengthErr.style.display = 'block';
+    err.style.display = 'block'
+    lengthErr.style.display = 'block'
+    valid = false
   }
   if (!password.value.match(numValidation)) {
     err.style.display = 'block'
     numErr.style.display = 'block'
+    valid = false
   }
   if (!password.value.match(upperCaseValidation)) {
     err.style.display = 'block'
     upperCaseErr.style.display = 'block'
+    valid = false
   }
+  //Om lösenordet är giltigt returnera true
+  return valid
 }
 
-form.addEventListener('submit', (event) => {
-  if (!validate(password.value)) {
-    event.preventDefault()
+//Om det finns sparad data från tidigare inlogg visas namnet upp på sidan
+//den funktionaliteten väljer jag att lägga i en DOMContentLoaded() för att
+//säkerställa att det visas som det ska om det skulle krocka nånstans i min asynkrona fetch()
+document.addEventListener('DOMContentLoaded', () => {
+  const savedUser = localStorage.getItem('username')
+  if (savedUser) {
+    personalPage.textContent = `${savedUser}'s filmerier`
+  } else {
+    personalPage.textContent = 'Albins filmerier'
   }
-  personalPage.textContent = `${userName.value}'s filmerier`
-  modal.close()
-  event.preventDefault()
-  userName.value = ''
-  password.value = ''
+
+  //Lägger till en eventlyssnare på formuläret som visar värdet från userName på
+  //webbsidan för att den ska kännas mer
+  form.addEventListener('submit', (event) => {
+    const remember = document.querySelector('#remember-me')
+    let name = userName.value
+    let pass = password.value
+    console.log('Koden körs')
+    if (validate(pass)) {
+      console.log('Allt är som de ska', name)
+      personalPage.textContent = `${name}'s filmerier`
+      modal.close()
+      //Sparar namn till localstorage när man har kryssrutan ikryssad för att
+      //kunna visa den personliga sidan även om man skulle stänga ner och öppna upp sidan
+      if (remember.checked) {
+        console.log(remember.checked);
+        localStorage.setItem('username', name)
+      }
+      //Resettar formuläret så att det visas som tomt om man öppnar Modalen igen
+      form.reset()
+      //Förhindrar att hela sidan laddas om
+      event.preventDefault()
+    } else {
+      console.log('Lösen fel')
+      info.style.display = 'block'
+      event.preventDefault()
+    }
+  })
+  userName.addEventListener('input', (validate))
+  password.addEventListener('input', (validate))
 })
-userName.addEventListener('input', (validate))
-password.addEventListener('input', (validate))
 
 /* 2. Navbar */
 
@@ -85,7 +127,7 @@ window.onscroll = () => {
   } else {
     navbar.style.top = '0'
   }
-  scrollPos = currentScrollPos;
+  scrollPos = currentScrollPos
 }
 
 //Skapar en funktion för min searchbar i navbaren
@@ -132,8 +174,8 @@ const getMovies = async () => {
 
 
     //Samma som ovan nämnda kod men för karusell 2
-    const response2 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options);
-    const data2 = response2.data;
+    const response2 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options)
+    const data2 = response2.data
     movieCarousel2.innerHTML = data2.results.map((result) => {
       return `<a href="https://themoviedb.org/movie/${result.id}"><img class="poster-image" loading="lazy" alt="${result.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${result.poster_path}"><p class="movie-title">${result.title}</p></a>`
     }).join('')
