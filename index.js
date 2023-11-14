@@ -5,10 +5,12 @@
 
 /* 1.Login Modal */
 
+//Hämtar in alla element som hör till min modal
 const modal = document.querySelector('.login-modal')
-const openModalBtn = document.querySelector('[data-open-modal]')
-const closeModalBtn = document.querySelector('[data-close-modal]')
-
+const openModalBtn = document.querySelector('#login-btn')
+const closeModalBtn = document.querySelector('#abort-btn')
+//Lägger till eventlyssnare som tack vare att jag använder mig av en <dialog> i HTML
+//enkelt kan visa och stänga min modal genom funktionerna nedan
 openModalBtn.addEventListener("click", () => {
   modal.showModal()
 })
@@ -16,19 +18,66 @@ closeModalBtn.addEventListener("click", () => {
   modal.close()
 })
 
+//Hämtar och lägger till lyssnare på mina inputs för att kunna spara data till localstorage
+//samt visa en personlig hälsning om man väljer att "logga in"
+const userName = document.querySelector('#name-input')
+const password = document.querySelector('#password-input')
+const personalPage = document.querySelector('#site-title')
+const err = document.querySelector('.error')
+const lengthErr = document.querySelector('#txt-err')
+const numErr = document.querySelector('#num-err')
+const upperCaseErr = document.querySelector('#UC-err')
+const form = document.querySelector('#login-form')
 
+//En funktion som kollar att lösenordsfältet innehåller vissa tecken
+//annars visas felmeddelanden
+const validate = () => {
+  let lengthValidation = /^.{5,}$/; // Minst 5 tecken
+  let numValidation = /\d/; // Minst en siffra
+  let upperCaseValidation = /[A-ZÅÄÖ]/; // Minst en stor bokstav
+  //Visa inga felmeddelanden till att börja med
+  lengthErr.style.display = 'none';
+  numErr.style.display = 'none';
+  err.style.display = 'none';
+  //Kollar om lösenordet innehåller vissa kriterier med metoden match()
+  if (!password.value.match(lengthValidation)) {
+    err.style.display = 'block';
+    lengthErr.style.display = 'block';
+  }
+  if (!password.value.match(numValidation)) {
+    err.style.display = 'block'
+    numErr.style.display = 'block'
+  }
+  if (!password.value.match(upperCaseValidation)) {
+    err.style.display = 'block'
+    upperCaseErr.style.display = 'block'
+  }
+}
+
+form.addEventListener('submit', (event) => {
+  if (!validate(password.value)) {
+    event.preventDefault()
+  }
+  personalPage.textContent = `${userName.value}'s filmerier`
+  modal.close()
+  event.preventDefault()
+  userName.value = ''
+  password.value = ''
+})
+userName.addEventListener('input', (validate))
+password.addEventListener('input', (validate))
 
 /* 2. Navbar */
 
 //Navbar försvinner ovanför skärmen när man scrollar
 //Väljer ut navbar elementet från min HTML
 const navbar = document.querySelector('#navbar')
-const threshold = 50
-let scrollpos = window.scrollY || window.pageYOffset
+const minScrollToHide = 50
+let scrollPos = window.scrollY || window.pageYOffset
 window.onscroll = () => {
   const currentScrollPos = window.scrollY || window.pageYOffset
-  if (currentScrollPos > threshold) {
-    if (scrollpos > currentScrollPos) {
+  if (currentScrollPos > minScrollToHide) {
+    if (scrollPos > currentScrollPos) {
       navbar.style.top = '0'
     } else {
       navbar.style.top = '-20vh'
@@ -36,12 +85,12 @@ window.onscroll = () => {
   } else {
     navbar.style.top = '0'
   }
-  scrollpos = currentScrollPos;
+  scrollPos = currentScrollPos;
 }
 
 //Skapar en funktion för min searchbar i navbaren
-const search = () => {
-
+const search = (title) => {
+  sessionStorage.getItem(title)
 }
 
 //Hämtar searchbaren från HTML och lägger till en lyssnare
@@ -69,35 +118,32 @@ const getMovies = async () => {
     const movieCarousel2 = document.querySelector('#movie-section-2')
     const movieCarousel3 = document.querySelector('#movie-section-3')
 
-    //Använder mig av axios för min GET till önskat API
+    //Använder mig av axios med await för min GET till önskat API, använder options variabeln från ovan där jag lagt in API nyckel
     const response = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
     const data = response.data
     //Loggar ut datan jag inhämtat för att se att det är rätt data
     console.log(data)
 
-    //Skapar en variabel som mapar den inhämtade datan till en ny array som jag sedan kan plocka ut datan ifrån och visa upp
-    const movieImgCar1 = await data.results.map((results) => {
+    //Mapar den inhämtade datan till en ny array som jag visar upp genom innerHTML i den första karusellen på sidan
+    movieCarousel1.innerHTML = data.results.map((results) => {
       return `<a href="https://themoviedb.org/movie/${results.id}"><img class="poster-image" loading="lazy" alt="${results.original_title}" src="https://themoviedb.org/t/p/w220_and_h330_face${results.poster_path}"><p class="movie-title">${results.title}</p></a>`
-    })
+    }).join('')
 
-    //Kör metoden join() med en innerHTML för att skapa nya element
-    movieCarousel1.innerHTML = movieImgCar1.join('')
+
 
     //Samma som ovan nämnda kod men för karusell 2
-    const response2 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options)
-    const data2 = response2.data
-    const movieImgCar2 = await data2.results.map((results) => {
-      return `<a href="https://themoviedb.org/movie/${results.id}"><img class="poster-image" loading="lazy" alt="${results.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${results.poster_path}"><p class="movie-title">${results.title}</p></a>`
-    })
-    movieCarousel2.innerHTML = movieImgCar2.join('')
+    const response2 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options);
+    const data2 = response2.data;
+    movieCarousel2.innerHTML = data2.results.map((result) => {
+      return `<a href="https://themoviedb.org/movie/${result.id}"><img class="poster-image" loading="lazy" alt="${result.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${result.poster_path}"><p class="movie-title">${result.title}</p></a>`
+    }).join('')
 
     //Och här för karusell 3
     const response3 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=3', options)
     const data3 = response3.data
-    const movieImgCar3 = await data3.results.map((results) => {
+    movieCarousel3.innerHTML = data3.results.map((results) => {
       return `<a href="https://themoviedb.org/movie/${results.id}"><img class="poster-image" loading="lazy" alt="${results.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${results.poster_path}"><p class="movie-title">${results.title}</p></a>`
-    })
-    movieCarousel3.innerHTML = movieImgCar3.join('')
+    }).join('')
   }
   //Loggar fel för att bättre kunna förstå om något inte går som jag vill
   catch (error) {

@@ -1,9 +1,10 @@
 /* Innehållsförteckning */
 /* 1. Root sätter standard för hemsidan */
-/* 2. Header med navbar */
-/* 3. Main med innehåll */
-/* 4. Footer med socials och information */
-/* 5. Media queries för responsitivitet */
+/* 2. Login-modal */
+/* 3. Navbar */
+/* 4. Main med innehåll */
+/* 5. Footer med socials och information */
+/* 6. Media queries för responsitivitet */
 
 
 /* 1. Root och body */
@@ -49,10 +50,10 @@ body {
 
 ::-webkit-scrollbar-track {
   background: var(--white-transparent);
-  border: 1px solid var(--black);
+  border: 2px solid var(--black);
 }
 
-/* 2. Header med inloggsmodal och navbar */
+/* 2. Modal */
 
 .login-modal {
   background-image: url(/img/Movie-theatre-unsplash-Gwen-King.jpg);
@@ -98,7 +99,7 @@ body {
   padding: 0.25rem;
   padding-right: 30px;
   margin-bottom: 0.75rem;
-  border: solid 2px var(--black);
+  border: solid 0.15rem var(--black);
 }
 
 #name-input-active,
@@ -130,26 +131,56 @@ body {
 #abort-btn {
   background-color: var(--white-transparent);
   font-size: 1.2rem;
+  text-wrap: nowrap;
   padding: 0.4rem 0.5rem 0.2rem 0.5rem;
   border-radius: 8px;
   cursor: pointer;
   position: absolute;
   top: 2%;
   right: 2%;
-  transition: ease 300ms;
+  transition: ease 200ms;
 }
 
 #submit-btn:hover,
 #forgot-pass:hover {
   color: var(--yellow);
   background-color: var(--grey);
-  border: solid 2px var(--yellow);
+  border: solid 0.15rem var(--yellow);
 }
 
 #abort-btn:hover {
   color: var(--white);
   background-color: var(--red);
 }
+
+label {
+  color: var(--white);
+}
+
+#remember-me {
+  height: 1rem;
+  width: 1rem;
+}
+
+.error {
+  display: none;
+  background-color: var(--white);
+  color: var(--red);
+  position: absolute;
+  bottom: 20%;
+  left: 25%;
+
+}
+
+#num-err {
+  display: none;
+}
+
+#txt-err {
+  display: none;
+}
+
+/* 3. Navbar */
 
 #navbar {
   display: flex;
@@ -158,7 +189,7 @@ body {
   top: 0;
   width: 100%;
   height: 15vh;
-  border-bottom: solid 2px var(--black);
+  border-bottom: solid 0.15rem var(--black);
   background-color: var(--red);
   transition: top 0.3s;
   text-wrap: nowrap;
@@ -169,18 +200,22 @@ body {
   width: 20vw;
   font-size: 1.5rem;
   background-color: var(--red);
+  color: var(--white);
   border: none;
   border-radius: 8px;
+  cursor: pointer;
+  transition: ease-in-out 300ms;
 }
 
 #login-btn:hover {
-  border: solid 2px var(--black);
+  border: solid 0.15rem var(--black);
+  letter-spacing: 0.08rem;
 }
 
 #navbar>ul {
   display: flex;
-  width: 100%;
-  gap: 1rem;
+  width: 40%;
+  gap: 1.2rem;
   flex-direction: row;
   justify-content: start;
   align-items: center;
@@ -200,10 +235,19 @@ body {
   font-size: 2.1rem;
 }
 
+.search-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #search-bar {
   position: relative;
+  color: var(--white);
   height: 5vh;
-  margin-right: 5vw;
+  min-width: 25vw;
+  margin-right: 10vw;
+  padding: 0.25rem;
   border-radius: 8px;
   background-color: var(--grey);
   filter: opacity(0.8);
@@ -211,12 +255,16 @@ body {
 }
 
 #search-btn {
+  position: absolute;
   margin-top: 2px;
-  font-size: 2rem;
+  margin-right: 10px;
+  padding: 1rem;
+  color: white;
+  font-size: 1rem;
   cursor: pointer;
 }
 
-/* 3. Main med innehåll */
+/* 4. Main med innehåll */
 
 main {
   margin-top: 18vh;
@@ -224,17 +272,20 @@ main {
 
 #hero {
   text-align: center;
-  border-bottom: solid 0.25rem rgba(0, 0, 0, 0.7);
 }
 
 #hero>img {
   height: 80vh;
   width: 100vw;
+  margin-bottom: 1vh;
+  border-top: solid 0.15rem rgba(0, 0, 0, 0.7);
+  border-bottom: solid 0.15rem rgba(0, 0, 0, 0.7);
 }
 
 #site-title {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--white);
+  padding-bottom: 2vh;
 }
 
 .carousel-wrapper {
@@ -242,9 +293,11 @@ main {
 }
 
 .movie-carousel {
+  text-align: center;
   margin-bottom: 10px;
   height: auto;
   background-color: var(--grey-transparent);
+  border-top: solid 0.1rem var(--black);
 }
 
 #movie-section-1,
@@ -255,7 +308,6 @@ main {
   grid-auto-flow: column;
   grid-auto-columns: 25%;
   overflow-x: scroll;
-  scrollbar-width: thin;
   padding: 0.5rem 1rem 1rem 1rem;
 }
 
@@ -268,7 +320,7 @@ main {
 .poster-image {
   object-fit: fill;
   border-radius: 8px;
-  border: solid 1.7px var(--black);
+  border: solid 0.1rem var(--black);
   width: 20vw;
   margin: 0.25rem;
 }
@@ -280,21 +332,35 @@ main {
   color: var(--white);
 }
 
-/* 4. Footer med socials och information */
+.movie-title:hover {
+  color: var(--black);
+}
+
+/* 5. Footer med socials och information */
 
 footer {
   height: 30vh;
   width: auto;
   background-color: var(--red);
-  border-top: solid 2px var(--black);
+  color: var(--white);
+  border-top: solid 0.15rem var(--black);
   text-align: center;
+  padding-top: 7vh;
 }
 
-/* 5. Media queries för responsitivitet */
+.social {
+  top: 1rem;
+}
+
+.fa-copyright {
+  font-size: 0.5rem;
+}
+
+/* 6. Media queries för responsitivitet */
 
 @media screen and (max-width: 660px) {
 
-  /* 2. Header med modal och navbar */
+  /* 2. Modal */
 
   #password-input,
   #name-input {
@@ -312,15 +378,17 @@ footer {
     font-size: 0.8rem;
   }
 
+  #login-btn,
   #submit-btn,
   #forgot-pass {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   #abort-btn {
     font-size: 0.9rem;
-    text-wrap: nowrap;
   }
+
+  /* Länkar både i header och footer */
 
   .link {
     font-size: 0.9rem;
@@ -343,5 +411,15 @@ footer {
   .movie-title {
     font-size: 0.7rem;
 
+  }
+
+  /* 4. Footer */
+
+  footer {
+    height: 20vh;
+  }
+
+  .social {
+    font-size: 2rem;
   }
 }
