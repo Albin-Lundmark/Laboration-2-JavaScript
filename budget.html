@@ -11,7 +11,7 @@
   <script src="https://kit.fontawesome.com/6d9dfbf23e.js" crossorigin="anonymous"></script>
   <!-- Lagt till axios -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <title>AL labb 2 JS</title>
+  <title>AL labb 2 JS budgetsidan</title>
 </head>
 
 <body>
@@ -64,27 +64,13 @@
     </dialog>
   </header>
 
-  <!-- Main med allt innehåll -->
-
   <main>
     <section id="hero">
       <h1 id="site-title">Albins filmerier</h1>
       <img src="/img/Projektor-alex-litvin-unsplash.jpg" alt="Projektor-alex-litvin-unsplash">
     </section>
-    <!-- Här nedanför har jag mina 3 karuseller som hämtar in filmtitlar och deras posters dynamiskt från ett API -->
-    <div class="carousel-wrapper">
-      <section class="movie-carousel">
-        <h2>Top 1-20</h2>
-        <div id="movie-section-1"></div>
-      </section>
-      <section class="movie-carousel">
-        <h2>Top 21-40</h2>
-        <div id="movie-section-2"></div>
-      </section>
-      <section class="movie-carousel">
-        <h2>Top 41-60</h2>
-        <div id="movie-section-3"></div>
-      </section>
+    <div class="diagram-wrapper">
+      <canvas id="diagram"></canvas>
     </div>
   </main>
 
@@ -97,12 +83,10 @@
     <a class="link social" href="#"><i class="fa-brands fa-linkedin"></i></a>
     <a class="link social" href="#"><i class="fa-brands fa-instagram "></i></a>
     <p>Copyright<i class="fa-regular fa-copyright"></i></p>
-    <p>Albin Lundmark</p>
-    <p>Front-end utvecklare</p>
 
   </footer>
-
-  <script src="index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="charts.js"></script>
 </body>
 
 </html>
