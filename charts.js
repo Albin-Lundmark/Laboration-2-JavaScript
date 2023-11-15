@@ -210,7 +210,7 @@ const clearSearch = () => {
 
 /* Chart.js ska här få göra ett diagram av olika filmtitlars budgets */
 
-const chart = async () => {
+/* const chart = async () => {
   try {
     //Skapar en variabel som innehåller API-nyckel för att kunna komma åt all data från det API jag har valt
     const options = {
@@ -223,4 +223,4 @@ const chart = async () => {
   catch (error) {
     console.error('Fel:', error)
   }
-}
+} */

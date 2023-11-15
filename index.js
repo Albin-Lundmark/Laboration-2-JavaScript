@@ -207,7 +207,7 @@ const clearSearch = () => {
   searchResultElement.innerHTML = ''
 }
 
-/* 3. Variabler för fetch() */
+/* 3. Fetch() för att visa upp filmer på sidan */
 
 /* Här skapar jag en funktion med async/await som innehåller hela min fetch() för filmer som ska visas på sidan och sedan använder jag mig av en callback för att hämta och visa upp filmerna asynkront på sidan */
 
