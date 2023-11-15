@@ -132,6 +132,7 @@ body {
   background-color: var(--white-transparent);
   font-size: 1.2rem;
   text-wrap: nowrap;
+  /* Ännu en gång säger validation att text-wrap inte finns */
   padding: 0.4rem 0.5rem 0.2rem 0.5rem;
   border-radius: 8px;
   cursor: pointer;
@@ -193,6 +194,7 @@ label {
   background-color: var(--red);
   transition: top 0.3s;
   text-wrap: nowrap;
+  /* Ännu en gång säger validation att text-wrap inte finns */
   z-index: 99;
 }
 
@@ -266,7 +268,7 @@ label {
 
 #search-bar:focus,
 #search-bar:hover {
-  transform: scale(105%);
+  transform: scale(1.1);
   background-color: var(--grey-transparent);
 }
 
@@ -404,7 +406,7 @@ main {
 }
 
 .poster-image:hover {
-  transform: scale(101%);
+  transform: scale(1.1);
 }
 
 .movie-title {
@@ -543,3 +545,5 @@ footer {
     font-size: 1.7rem;
   }
 }
+
+/* All kod är validerad med W3C validation extension med 2 errors på min text-wrap: no-wrap */

@@ -255,5 +255,5 @@ const getMovies = async () => {
     console.error('Fel:', error)
   }
 }
-//Kör min fetch() som ligger i funktionen getMovies()
+//Kör min fetch() som ligger i async funktionen getMovies()
 getMovies()
