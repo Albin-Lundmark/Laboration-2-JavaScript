@@ -361,6 +361,7 @@ main {
 #site-title {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--white);
+  text-shadow: 0 5px 5px var(--black);
   padding-bottom: 2vh;
 }
 
@@ -497,6 +498,7 @@ footer {
   /* Länkar både i header och footer */
 
   .link {
+    text-shadow: 0 0 5px var(--black);
     font-size: 0.9rem;
   }
 
