@@ -21,16 +21,23 @@
 
   <header>
     <nav id="navbar">
-      <button id="login-btn">Logga in</button>
+      <button id="login-btn">Logga in</button> <!-- Knapp som öppnar min modal för att "logga in" -->
       <ul>
         <li><a class="link" href="index.html">Hem</a></li>
-        <li><a class="link" href="budget.html">Bugdets</a></li>
+        <li><a class="link" href="budget.html">Budgets</a></li>
       </ul>
       <div class="search-div">
-        <input type="search" name="search" id="search-bar">
+        <input type="search" autocomplete="off" name="search" id="search-bar" placeholder="Sök film..">
         <i id="search-btn" class="fa-solid fa-magnifying-glass"></i>
+        <div class="search-result-container">
+          <div id="search-result">
+            <!-- Här visar jag upp sökresultat från input search -->
+          </div>
+        </div>
       </div>
     </nav>
+    <!-- Modal som tack vare att den ligger i en dialog automatiskt gör bakgrunden mörkare då den öppnas
+    och även att man inte kan klicka utanför -->
     <dialog class="login-modal">
       <div class="form-wrapper">
         <form id="login-form">
@@ -52,6 +59,7 @@
           <p id="num-err">Lösenordet måste innehålla minst 1 siffra</p>
           <p id="txt-err">Lösenordet måste vara minst 5 tecken långt</p>
           <p id="UC-err">Lösenordet måste innehålla 1 stor bokstav</p>
+          <p id="info">Lösenordet är inte giltigt</p>
         </div>
       </div>
     </dialog>

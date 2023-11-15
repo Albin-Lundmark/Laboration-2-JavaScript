@@ -1,7 +1,7 @@
 /* Innehållsförteckning */
 /* 1. Login Modal */
 /* 2. Navbar */
-/* 3. Variabler för fetch() */
+/* 3. Diagram med charts.js */
 
 /* 1.Login Modal */
 
@@ -126,17 +126,89 @@ window.onscroll = () => {
   scrollPos = currentScrollPos
 }
 
-//Skapar en funktion för min searchbar i navbaren
-const search = (title) => {
-  sessionStorage.getItem(title)
+//Searchbar i min navbar
+//Hämtar searchbaren från HTML dokumentet
+const searchBar = document.querySelector('#search-bar')
+
+//Skapar en funktion för min searchbar i navbaren med fetch()
+const search = async () => {
+  try {
+    //Skapar en variabel som innehåller API-nyckel för att kunna komma åt all data från det API jag har valt
+    const options = {
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjU2ZDkzZGUxNGUwNmY0M2ZjYWZlYzBjMmVkZDA1YiIsInN1YiI6IjY1NDEwNTAxMzNhNTMzMDE0ZDQ2YjdlZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-VhFqWT1Gq2DibxvzyqFN2kDbqOFUC44V7EOvjLgU9Y'
+      }
+    }
+
+    //Använder mig av axios för att köra mina GET
+    const response1 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
+    const response2 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options)
+    const response3 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=3', options)
+
+    //Använder map för att hämta den datan som är relevant för search() från varje respons
+    const movies1 = response1.data.results
+    const movies2 = response2.data.results
+    const movies3 = response3.data.results
+
+    //Använder concat för att sammanslå filmobjekten från olika sidor till 1 array
+    const movieList = movies1.concat(movies2, movies3)
+
+    //Hämtar in söktexten från search elementet och omvandlar texten till lowercase
+    //samt tar bort whitespace före och efter så att sökningen inte ska vara case sensitive
+    const searchText = searchBar.value.trim().toLowerCase()
+
+    //Lägger till en if sats så att sökningen rensar listan om ingen titel matchar
+    if (searchText === '') {
+      clearSearch()
+      return
+    }
+
+    //Filtrerar ut titlar efter titlar eller årtal/datum då filmen gjordes
+    const movieSearch = movieList.filter(movie => movie.title.toLowerCase().includes(searchText) || movie.release_date.includes(searchText))
+
+    //Skapar en funktion i min funktion som returnerar objekten i listan när man söker
+    const createMovieHTML = (movie) => {
+      return `<a class="searchbar-item" href="https://themoviedb.org/movie/${movie.id}">
+                <img class="poster-image-searchbar" loading="lazy" alt="${movie.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}">
+                <p class="movie-title-searchbar">${movie.title}</p>
+                </a>
+                <p>Filmen släpptes: ${movie.release_date}</p>`
+    }
+    //Skapar en lista att lägga in och visa upp sökningen i
+    const searchResults = document.createElement('ul')
+
+    //Lägger till sökningens träffar i listan
+    movieSearch.forEach(movie => {
+      const listItem = document.createElement('li')
+      listItem.innerHTML = createMovieHTML(movie)
+      searchResults.appendChild(listItem)
+    })
+
+    //Hämtar in elementet som listan ska visas i och appendar listan
+    const searchResultElement = document.querySelector('#search-result')
+    searchResultElement.innerHTML = ''
+
+    //Ser till att listan inte ligger kvar om searchbaren är tom eller töms
+    if (movieSearch.length > 0) {
+      searchResultElement.appendChild(searchResults)
+    }
+  }
+  catch (error) {
+    console.error('Fel:', error)
+  }
 }
 
-//Hämtar searchbaren från HTML och lägger till en lyssnare
-const searchBar = document.querySelector('#search-bar').addEventListener('keydown', (event) => {
-  if (event.target.value === 'Enter') {
-    search()
-  }
-})
+//Lägger till lyssnaren efter för att den ska kunna köra funktionen
+searchBar.addEventListener('input', (search))
+
+const clearSearch = () => {
+  const searchResultElement = document.querySelector('#search-result')
+  searchResultElement.innerHTML = ''
+}
+
+
+/* Chart.js ska här få göra ett diagram av olika filmtitlars budgets */
 
 const chart = async () => {
   try {
@@ -148,3 +220,7 @@ const chart = async () => {
       }
     }
   }
+  catch (error) {
+    console.error('Fel:', error)
+  }
+}
