@@ -336,6 +336,14 @@ main {
   color: var(--black);
 }
 
+.diagram-wrapper {
+  margin: auto;
+  margin-bottom: 4vh;
+  background-color: var(--white-transparent);
+  height: 60vh;
+  width: 80vw;
+}
+
 /* 5. Footer med socials och information */
 
 footer {

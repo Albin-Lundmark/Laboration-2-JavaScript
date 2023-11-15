@@ -11,6 +11,7 @@
   <script src="https://kit.fontawesome.com/6d9dfbf23e.js" crossorigin="anonymous"></script>
   <!-- Lagt till axios -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="path/to/chartjs/dist/chart.umd.js"></script>
   <title>AL labb 2 JS budgetsidan</title>
 </head>
 
@@ -56,7 +57,11 @@
     </dialog>
   </header>
 
-  <main></main>
+  <main>
+    <div class="diagram-wrapper">
+      <canvas id="diagram"></canvas>
+    </div>
+  </main>
 
   <!-- Footer med information om var jag har hämtat data, länkar till samtliga källor
   och även "länkar" till sidans andra sociala medier -->
@@ -69,6 +74,7 @@
     <p>Copyright<i class="fa-regular fa-copyright"></i></p>
 
   </footer>
+  <script src="charts.js"></script>
 </body>
 
 </html>
