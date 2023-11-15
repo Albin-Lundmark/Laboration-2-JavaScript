@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (savedUser) {
     personalPage.textContent = `${savedUser}'s filmerier`
   } else {
-    personalPage.textContent = 'Albins filmerier'
+    personalPage.textContent = 'Filmerier'
   }
 
   //Lägger till en eventlyssnare på formuläret som visar värdet från userName på
@@ -169,7 +169,7 @@ const search = async () => {
 
     //Skapar en funktion i min funktion som returnerar objekten i listan när man söker
     const createMovieHTML = (movie) => {
-      return `<a class="searchbar-item" href="https://themoviedb.org/movie/${movie.id}">
+      return `<a class="searchbar-item" target="_blank" href="https://themoviedb.org/movie/${movie.id}">
                 <img class="poster-image-searchbar" loading="lazy" alt="${movie.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}">
                 <p class="movie-title-searchbar">${movie.title}</p>
                 </a>

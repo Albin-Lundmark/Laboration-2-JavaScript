@@ -167,9 +167,9 @@ label {
   background-color: var(--white);
   color: var(--red);
   position: absolute;
-  bottom: 20%;
-  left: 25%;
-
+  bottom: 12%;
+  left: 30%;
+  margin: 1rem;
 }
 
 #num-err {
@@ -193,7 +193,6 @@ label {
   background-color: var(--red);
   transition: top 0.3s;
   text-wrap: nowrap;
-  text-shadow: 0 0 6px var(--black);
   z-index: 99;
 }
 
@@ -228,6 +227,7 @@ label {
   font-size: 2rem;
   list-style: none;
   text-decoration: none;
+  text-shadow: 0 0 5px var(--black);
   color: var(--white);
   transition: ease-in-out 0.3s;
   cursor: pointer;
@@ -301,7 +301,6 @@ label {
 }
 
 #search-result>ul>li {
-
   padding: 0.25rem;
   border: solid 0.1rem var(--grey);
 }
@@ -481,6 +480,14 @@ footer {
   #abort-btn {
     font-size: 0.9rem;
   }
+
+  .error {
+    left: 0;
+    bottom: 15vh;
+    font-size: 0.6rem;
+  }
+
+  /* Searchbar */
 
   .search-div {
     margin-right: 3vw;
