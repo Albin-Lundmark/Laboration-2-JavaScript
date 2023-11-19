@@ -23,7 +23,7 @@
       <button id="login-btn">Logga in</button> <!-- Knapp som öppnar min modal för att "logga in" -->
       <ul>
         <li><a class="link" href="index.html">Hem</a></li>
-        <li><a class="link" href="budget.html">Budgets</a></li>
+        <li><a class="link" href="popularity.html">Populära</a></li>
       </ul>
       <div class="search-div">
         <input type="search" autocomplete="off" name="search" id="search-bar" placeholder="Sök film..">
@@ -45,15 +45,19 @@
           </div>
           <div class="pass">
             <input id="password-input" type="password" name="password" placeholder="Lösenord" required>
+            <!-- Lägg till funktion till ögat för att kunna toggla att se lösenordet när du har tid -->
             <i class="fa-regular fa-eye-slash"></i>
           </div>
+          <!-- Lägg till funktion för glömt lösenord -->
           <button id="forgot-pass">Glömt lösenordet</button>
           <button id="submit-btn" type="submit">Logga in</button>
           <label>Kom ihåg mig
             <input type="checkbox" name="remember" id="remember-me">
           </label>
+          <button class="delete-btn">Glöm mig</button>
         </form>
-        <button id="abort-btn"><i class="fa-solid fa-xmark"></i> </button>
+        <button id="abort-btn"><i class="fa-solid fa-xmark"></i></button>
+        <!-- Ordna snyggare styling på errormeddelanden -->
         <div class="error">
           <p id="num-err">Lösenordet måste innehålla minst 1 siffra</p>
           <p id="txt-err">Lösenordet måste vara minst 5 tecken långt</p>
@@ -64,14 +68,16 @@
     </dialog>
   </header>
 
-  <!-- Main med allt innehåll -->
+  <!-- Main med hero och filmkaruseller -->
 
   <main>
     <section id="hero">
       <h1 id="site-title">Filmerier</h1>
       <img src="/img/Projektor-alex-litvin-unsplash.jpg" alt="Projektor-alex-litvin-unsplash">
     </section>
+
     <!-- Här nedanför har jag mina 3 karuseller som hämtar in filmtitlar och deras posters dynamiskt från ett API -->
+
     <div class="carousel-wrapper">
       <section class="movie-carousel">
         <h2>Top 1-20</h2>

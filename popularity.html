@@ -11,7 +11,7 @@
   <script src="https://kit.fontawesome.com/6d9dfbf23e.js" crossorigin="anonymous"></script>
   <!-- Lagt till axios -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <title>AL labb 2 JS budgetsidan</title>
+  <title>AL labb 2 JS popularitetssidan</title>
 </head>
 
 <body>
@@ -23,7 +23,7 @@
       <button id="login-btn">Logga in</button> <!-- Knapp som öppnar min modal för att "logga in" -->
       <ul>
         <li><a class="link" href="index.html">Hem</a></li>
-        <li><a class="link" href="budget.html">Budgets</a></li>
+        <li><a class="link" href="popularity.html">Populära</a></li>
       </ul>
       <div class="search-div">
         <input type="search" autocomplete="off" name="search" id="search-bar" placeholder="Sök film..">
@@ -64,13 +64,19 @@
     </dialog>
   </header>
 
+  <!-- Main sectionen på budgetsidan där hero visas samma som hemsidan och även diagram -->
+
   <main>
     <section id="hero">
-      <h1 id="site-title">Filmerier</h1>
+      <h1 id="site-title">Filmerier och betyg på populära filmer</h1>
       <img src="/img/Projektor-alex-litvin-unsplash.jpg" alt="Projektor-alex-litvin-unsplash">
     </section>
     <div class="diagram-wrapper">
       <canvas id="diagram"></canvas>
+    </div>
+    <button class="see-more">Visa fler filmer</button>
+    <div class="diagram-wrapper2">
+      <canvas id="diagram2"></canvas>
     </div>
   </main>
 
