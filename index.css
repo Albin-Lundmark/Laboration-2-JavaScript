@@ -497,6 +497,10 @@ footer {
   text-shadow: 0 0 5px var(--black);
 }
 
+.fa-brands {
+  overflow: hidden;
+}
+
 .fa-copyright {
   font-size: 0.5rem;
 }

@@ -175,7 +175,7 @@ const search = async () => {
 
     //Lägger till en if sats som skickar vidare till en funktion så att
     //sökningen rensar listan om ingen titel matchar
-    if (searchText === '' || a) {
+    if (searchText === '') {
       clearSearch()
       return
     }
