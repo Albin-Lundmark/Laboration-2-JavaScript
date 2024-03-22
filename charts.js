@@ -1,20 +1,21 @@
 /* Innehållsförteckning */
 /* 1. Login Modal */
-/* 2. Navbar med sökruta */
-/* 3. Fetch() för att visa upp filmer på sidan */
+/* 2. Navbar */
+/* 3. Diagram med charts.js */
+
 
 /* 1.Login Modal */
 
-//Hämtar in element som hör till min modal
+//Hämtar in alla element som hör till min modal
 const modal = document.querySelector('.login-modal')
 const openModalBtn = document.querySelector('#login-btn')
 const closeModalBtn = document.querySelector('#abort-btn')
 //Lägger till eventlyssnare som tack vare att jag använder mig av en <dialog> i HTML
 //enkelt kan visa och stänga min modal genom funktionerna nedan
-openModalBtn.addEventListener('click', () => {
+openModalBtn.addEventListener("click", () => {
   modal.showModal()
 })
-closeModalBtn.addEventListener('click', () => {
+closeModalBtn.addEventListener("click", () => {
   modal.close()
 })
 
@@ -47,8 +48,7 @@ const validate = () => {
   err.style.display = 'none'
   upperCaseErr.style.display = 'none'
   info.style.display = 'none'
-  //Kollar om lösenordet innehåller vissa kriterier
-  //från variablerna ovan med metoden match()
+  //Kollar om lösenordet innehåller vissa kriterier med metoden match()
   if (!password.value.match(lengthValidation)) {
     err.style.display = 'block'
     lengthErr.style.display = 'block'
@@ -74,9 +74,9 @@ const validate = () => {
 document.addEventListener('DOMContentLoaded', () => {
   const savedUser = localStorage.getItem('username')
   if (savedUser) {
-    personalPage.textContent = `${savedUser}'s filmerier`
+    personalPage.textContent = `${savedUser}'s filmerier och betyg på populära filmer`
   } else {
-    personalPage.textContent = 'Filmerier'
+    personalPage.textContent = 'Filmerier och olika budget på filmer'
   }
 
   //Lägger till en eventlyssnare på formuläret som visar värdet från userName på
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let name = userName.value
     let pass = password.value
     if (validate(pass)) {
-      personalPage.textContent = `${name}'s filmerier`
+      personalPage.textContent = `${name}'s filmerier och olika budget på filmer`
       modal.close()
       //Sparar namn till localstorage när man har kryssrutan ikryssad för att
       //kunna visa den personliga sidan även om man skulle stänga ner och öppna upp sidan
@@ -104,20 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   userName.addEventListener('input', (validate))
   password.addEventListener('input', (validate))
-
-  //Lägger till en knapp i formuläret där man kan välja att ta bort det sparade användarnamnet från localstorage
-  const deleteBtn = document.querySelector('.delete-btn')
-  if (deleteBtn) {
-    deleteBtn.addEventListener('click', () => {
-      const confirmation = confirm('Är du säker på att du vill ta bort ditt sparade användarnamn?')
-      if (confirmation) {
-        //Om man väljer att ta bort användarnamnet, ta bort värde från localstorage och
-        //resetta sidans personliga text
-        localStorage.removeItem('username')
-        personalPage.textContent = 'Filmerier'
-      }
-    })
-  }
 })
 
 /* 2. Navbar */
@@ -156,12 +142,12 @@ const search = async () => {
       }
     }
 
-    //Använder mig av axios för att köra mina GET requests
+    //Använder mig av axios för att köra mina GET
     const response1 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
     const response2 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options)
     const response3 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=3', options)
 
-    //Tar ut datan från responsen
+    //Använder map för att hämta den datan som är relevant för search() från varje respons
     const movies1 = response1.data.results
     const movies2 = response2.data.results
     const movies3 = response3.data.results
@@ -173,8 +159,7 @@ const search = async () => {
     //samt tar bort whitespace före och efter så att sökningen inte ska vara case sensitive
     const searchText = searchBar.value.trim().toLowerCase()
 
-    //Lägger till en if sats som skickar vidare till en funktion så att
-    //sökningen rensar listan om ingen titel matchar
+    //Lägger till en if sats så att sökningen rensar listan om ingen titel matchar
     if (searchText === '') {
       clearSearch()
       return
@@ -218,59 +203,138 @@ const search = async () => {
 //Lägger till lyssnaren efter för att den ska kunna köra funktionen
 searchBar.addEventListener('input', (search))
 
-//Funktion som rensar listan i sökfältet när det är tomt
 const clearSearch = () => {
   const searchResultElement = document.querySelector('#search-result')
   searchResultElement.innerHTML = ''
 }
 
-/* 3. Fetch() för att visa upp filmer på sidan */
 
-/* Här skapar jag en funktion med async/await som innehåller hela min fetch() för filmer som ska visas på sidan och sedan använder jag mig av en callback för att hämta och visa upp filmerna asynkront på sidan */
+/* Chart.js ska här få göra ett diagram av olika filmtitlars popularitet */
 
-const getMovies = async () => {
+const chart = async () => {
   try {
-    //Skapar en variabel som innehåller API-nyckel för att kunna komma åt all data från det API jag har valt
     const options = {
       headers: {
         accept: 'application/json',
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjU2ZDkzZGUxNGUwNmY0M2ZjYWZlYzBjMmVkZDA1YiIsInN1YiI6IjY1NDEwNTAxMzNhNTMzMDE0ZDQ2YjdlZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-VhFqWT1Gq2DibxvzyqFN2kDbqOFUC44V7EOvjLgU9Y'
       }
     }
-    //Hämtar varje section från DOM där filmerna ska visas in i variabler
-    const movieCarousel1 = document.querySelector('#movie-section-1')
-    const movieCarousel2 = document.querySelector('#movie-section-2')
-    const movieCarousel3 = document.querySelector('#movie-section-3')
-
-    //Använder mig av axios med await för min GET till önskat API, använder options variabeln från ovan där jag lagt in API nyckeln
     const response = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
-    const response2 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options)
-    const response3 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=3', options)
     const data = response.data
-    const data2 = response2.data
-    const data3 = response3.data
-    //Loggar ut datan jag inhämtat för att se att det är rätt data
-    console.log(data, data2, data3)
 
-    //Mapar den inhämtade datan till en ny array som jag visar upp genom innerHTML i karusellerna på sidan
-    movieCarousel1.innerHTML = data.results.map((movie) => {
-      return `<a href="https://themoviedb.org/movie/${movie.id}"><img class="poster-image" loading="lazy" alt="${movie.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}"><p class="movie-title">${movie.title}</p></a>`
-    }).join('')
+    //Plockar ut och lägger in popularitet i en variabel med map så att jag får en array
+    const moviePopularity = data.results.map((movie) => {
+      return movie.vote_average
+    })
+    //Plockar ut och lägger in titlar i en variabel med map så att jag får en array
+    const movieTitles = data.results.map((movie) => {
+      return movie.title
+    })
 
-    //Mapar den inhämtade datan till en ny array som jag visar upp genom innerHTML i karusellerna på sidan
-    movieCarousel2.innerHTML = data2.results.map((movie) => {
-      return `<a href="https://themoviedb.org/movie/${movie.id}"><img class="poster-image" loading="lazy" alt="${movie.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}"><p class="movie-title">${movie.title}</p></a>`
-    }).join('')
+    /* Här skapar jag min chart */
+    //Hämtar in elementet där mitt diagram ska visas
+    const ctx = document.querySelector('#diagram');
 
-    //Mapar den inhämtade datan till en ny array som jag visar upp genom innerHTML i karusellerna på sidan
-    movieCarousel3.innerHTML = data3.results.map((movie) => {
-      return `<a href="https://themoviedb.org/movie/${movie.id}"><img class="poster-image" loading="lazy" alt="${movie.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}"><p class="movie-title">${movie.title}</p></a>`
-    }).join('')
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: movieTitles,
+        datasets: [{
+          label: 'Populäraste filmernas betyg just nu enligt TMDBs användare',
+          data: moviePopularity,
+          borderWidth: 1,
+          borderRadius: 3,
+          borderColor: 'rgba(13, 4, 7, 1)',
+          backgroundColor: 'rgba(91, 12, 18, 1)'
+        }]
+      },
+      responsive: true,
+      options: {
+        indexAxis: 'y',
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+          x: {
+            beginAtZero: true,
+            max: 10
+          }
+        }
+      }
+    })
   }
-  //Loggar fel för att bättre kunna förstå om något inte går som jag vill
   catch (error) {
     console.error('Fel:', error)
   }
 }
-//Kör min fetch() som ligger i async funktionen getMovies()
-getMovies()
+chart()
+
+const chart2 = async () => {
+  try {
+    const options = {
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjU2ZDkzZGUxNGUwNmY0M2ZjYWZlYzBjMmVkZDA1YiIsInN1YiI6IjY1NDEwNTAxMzNhNTMzMDE0ZDQ2YjdlZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-VhFqWT1Gq2DibxvzyqFN2kDbqOFUC44V7EOvjLgU9Y'
+      }
+    }
+
+    const response = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options)
+    const data = response.data
+
+    const moviePopularity = data.results.map((movie) => {
+      return movie.vote_average
+    })
+    const movieTitles = data.results.map((movie) => {
+      return movie.title
+    })
+
+    const ctx = document.querySelector('#diagram2')
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: movieTitles,
+        datasets: [{
+          label: 'Populäraste filmernas betyg just nu enligt TMDBs användare',
+          data: moviePopularity,
+          borderWidth: 1,
+          borderRadius: 3,
+          borderColor: 'rgba(13, 4, 7, 1)',
+          backgroundColor: 'rgba(91, 12, 18, 1)'
+        }]
+      },
+      responsive: true,
+      options: {
+        indexAxis: 'y',
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+          x: {
+            beginAtZero: true,
+            max: 10
+          }
+        }
+      }
+    })
+  }
+  catch (error) {
+    console.error('Fel:', error)
+  }
+}
+chart2()
+
+const diagramWrapperDiv = document.querySelector('.diagram-wrapper2')
+const seeMoreBtn = document.querySelector('.see-more')
+
+const toggleShow = () => {
+  const style = window.getComputedStyle(diagramWrapperDiv)
+  if (style.display === 'none') {
+    diagramWrapperDiv.style.display = 'block'
+    seeMoreBtn.textContent = 'Göm filmer'
+  } else {
+    diagramWrapperDiv.style.display = 'none'
+    seeMoreBtn.textContent = 'Visa fler filmer'
+  }
+}
+seeMoreBtn.addEventListener('click', toggleShow)
