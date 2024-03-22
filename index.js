@@ -1,20 +1,20 @@
 /* Innehållsförteckning */
 /* 1. Login Modal */
-/* 2. Navbar */
-/* 3. Variabler för fetch() */
+/* 2. Navbar med sökruta */
+/* 3. Fetch() för att visa upp filmer på sidan */
 
 /* 1.Login Modal */
 
-//Hämtar in alla element som hör till min modal
+//Hämtar in element som hör till min modal
 const modal = document.querySelector('.login-modal')
 const openModalBtn = document.querySelector('#login-btn')
 const closeModalBtn = document.querySelector('#abort-btn')
 //Lägger till eventlyssnare som tack vare att jag använder mig av en <dialog> i HTML
 //enkelt kan visa och stänga min modal genom funktionerna nedan
-openModalBtn.addEventListener("click", () => {
+openModalBtn.addEventListener('click', () => {
   modal.showModal()
 })
-closeModalBtn.addEventListener("click", () => {
+closeModalBtn.addEventListener('click', () => {
   modal.close()
 })
 
@@ -47,7 +47,8 @@ const validate = () => {
   err.style.display = 'none'
   upperCaseErr.style.display = 'none'
   info.style.display = 'none'
-  //Kollar om lösenordet innehåller vissa kriterier med metoden match()
+  //Kollar om lösenordet innehåller vissa kriterier
+  //från variablerna ovan med metoden match()
   if (!password.value.match(lengthValidation)) {
     err.style.display = 'block'
     lengthErr.style.display = 'block'
@@ -75,11 +76,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (savedUser) {
     personalPage.textContent = `${savedUser}'s filmerier`
   } else {
-    personalPage.textContent = 'Albins filmerier'
+    personalPage.textContent = 'Filmerier'
   }
 
   //Lägger till en eventlyssnare på formuläret som visar värdet från userName på
-  //webbsidan för att den ska kännas mer
+  //webbsidan för att den ska kännas mer personlig
   form.addEventListener('submit', (event) => {
     const remember = document.querySelector('#remember-me')
     let name = userName.value
@@ -103,6 +104,20 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   userName.addEventListener('input', (validate))
   password.addEventListener('input', (validate))
+
+  //Lägger till en knapp i formuläret där man kan välja att ta bort det sparade användarnamnet från localstorage
+  const deleteBtn = document.querySelector('.delete-btn')
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', () => {
+      const confirmation = confirm('Är du säker på att du vill ta bort ditt sparade användarnamn?')
+      if (confirmation) {
+        //Om man väljer att ta bort användarnamnet, ta bort värde från localstorage och
+        //resetta sidans personliga text
+        localStorage.removeItem('username')
+        personalPage.textContent = 'Filmerier'
+      }
+    })
+  }
 })
 
 /* 2. Navbar */
@@ -141,12 +156,12 @@ const search = async () => {
       }
     }
 
-    //Använder mig av axios för att köra mina GET
+    //Använder mig av axios för att köra mina GET requests
     const response1 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
     const response2 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options)
     const response3 = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=3', options)
 
-    //Använder map för att hämta den datan som är relevant för search() från varje respons
+    //Tar ut datan från responsen
     const movies1 = response1.data.results
     const movies2 = response2.data.results
     const movies3 = response3.data.results
@@ -158,7 +173,8 @@ const search = async () => {
     //samt tar bort whitespace före och efter så att sökningen inte ska vara case sensitive
     const searchText = searchBar.value.trim().toLowerCase()
 
-    //Lägger till en if sats så att sökningen rensar listan om ingen titel matchar
+    //Lägger till en if sats som skickar vidare till en funktion så att
+    //sökningen rensar listan om ingen titel matchar
     if (searchText === '') {
       clearSearch()
       return
@@ -169,7 +185,7 @@ const search = async () => {
 
     //Skapar en funktion i min funktion som returnerar objekten i listan när man söker
     const createMovieHTML = (movie) => {
-      return `<a class="searchbar-item" href="https://themoviedb.org/movie/${movie.id}">
+      return `<a class="searchbar-item" target="_blank" href="https://themoviedb.org/movie/${movie.id}">
                 <img class="poster-image-searchbar" loading="lazy" alt="${movie.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}">
                 <p class="movie-title-searchbar">${movie.title}</p>
                 </a>
@@ -202,6 +218,7 @@ const search = async () => {
 //Lägger till lyssnaren efter för att den ska kunna köra funktionen
 searchBar.addEventListener('input', (search))
 
+//Funktion som rensar listan i sökfältet när det är tomt
 const clearSearch = () => {
   const searchResultElement = document.querySelector('#search-result')
   searchResultElement.innerHTML = ''
@@ -236,18 +253,18 @@ const getMovies = async () => {
     console.log(data, data2, data3)
 
     //Mapar den inhämtade datan till en ny array som jag visar upp genom innerHTML i karusellerna på sidan
-    movieCarousel1.innerHTML = data.results.map((results) => {
-      return `<a href="https://themoviedb.org/movie/${results.id}"><img class="poster-image" loading="lazy" alt="${results.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${results.poster_path}"><p class="movie-title">${results.title}</p></a>`
+    movieCarousel1.innerHTML = data.results.map((movie) => {
+      return `<a href="https://themoviedb.org/movie/${movie.id}"><img class="poster-image" loading="lazy" alt="${movie.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}"><p class="movie-title">${movie.title}</p></a>`
     }).join('')
 
     //Mapar den inhämtade datan till en ny array som jag visar upp genom innerHTML i karusellerna på sidan
-    movieCarousel2.innerHTML = data2.results.map((result) => {
-      return `<a href="https://themoviedb.org/movie/${result.id}"><img class="poster-image" loading="lazy" alt="${result.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${result.poster_path}"><p class="movie-title">${result.title}</p></a>`
+    movieCarousel2.innerHTML = data2.results.map((movie) => {
+      return `<a href="https://themoviedb.org/movie/${movie.id}"><img class="poster-image" loading="lazy" alt="${movie.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}"><p class="movie-title">${movie.title}</p></a>`
     }).join('')
 
     //Mapar den inhämtade datan till en ny array som jag visar upp genom innerHTML i karusellerna på sidan
-    movieCarousel3.innerHTML = data3.results.map((results) => {
-      return `<a href="https://themoviedb.org/movie/${results.id}"><img class="poster-image" loading="lazy" alt="${results.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${results.poster_path}"><p class="movie-title">${results.title}</p></a>`
+    movieCarousel3.innerHTML = data3.results.map((movie) => {
+      return `<a href="https://themoviedb.org/movie/${movie.id}"><img class="poster-image" loading="lazy" alt="${movie.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}"><p class="movie-title">${movie.title}</p></a>`
     }).join('')
   }
   //Loggar fel för att bättre kunna förstå om något inte går som jag vill
@@ -255,5 +272,5 @@ const getMovies = async () => {
     console.error('Fel:', error)
   }
 }
-//Kör min fetch() som ligger i funktionen getMovies()
+//Kör min fetch() som ligger i async funktionen getMovies()
 getMovies()

@@ -3,6 +3,7 @@
 /* 2. Navbar */
 /* 3. Diagram med charts.js */
 
+
 /* 1.Login Modal */
 
 //Hämtar in alla element som hör till min modal
@@ -73,19 +74,19 @@ const validate = () => {
 document.addEventListener('DOMContentLoaded', () => {
   const savedUser = localStorage.getItem('username')
   if (savedUser) {
-    personalPage.textContent = `${savedUser}'s filmerier`
+    personalPage.textContent = `${savedUser}'s filmerier och betyg på populära filmer`
   } else {
-    personalPage.textContent = 'Albins filmerier'
+    personalPage.textContent = 'Filmerier och olika budget på filmer'
   }
 
   //Lägger till en eventlyssnare på formuläret som visar värdet från userName på
-  //webbsidan för att den ska kännas mer
+  //webbsidan för att den ska kännas mer personlig
   form.addEventListener('submit', (event) => {
     const remember = document.querySelector('#remember-me')
     let name = userName.value
     let pass = password.value
     if (validate(pass)) {
-      personalPage.textContent = `${name}'s filmerier`
+      personalPage.textContent = `${name}'s filmerier och olika budget på filmer`
       modal.close()
       //Sparar namn till localstorage när man har kryssrutan ikryssad för att
       //kunna visa den personliga sidan även om man skulle stänga ner och öppna upp sidan
@@ -169,7 +170,7 @@ const search = async () => {
 
     //Skapar en funktion i min funktion som returnerar objekten i listan när man söker
     const createMovieHTML = (movie) => {
-      return `<a class="searchbar-item" href="https://themoviedb.org/movie/${movie.id}">
+      return `<a class="searchbar-item" target="_blank" href="https://themoviedb.org/movie/${movie.id}">
                 <img class="poster-image-searchbar" loading="lazy" alt="${movie.title}" src="https://themoviedb.org/t/p/w220_and_h330_face${movie.poster_path}">
                 <p class="movie-title-searchbar">${movie.title}</p>
                 </a>
@@ -208,19 +209,132 @@ const clearSearch = () => {
 }
 
 
-/* Chart.js ska här få göra ett diagram av olika filmtitlars budgets */
+/* Chart.js ska här få göra ett diagram av olika filmtitlars popularitet */
 
-/* const chart = async () => {
+const chart = async () => {
   try {
-    //Skapar en variabel som innehåller API-nyckel för att kunna komma åt all data från det API jag har valt
     const options = {
       headers: {
         accept: 'application/json',
         Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjU2ZDkzZGUxNGUwNmY0M2ZjYWZlYzBjMmVkZDA1YiIsInN1YiI6IjY1NDEwNTAxMzNhNTMzMDE0ZDQ2YjdlZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-VhFqWT1Gq2DibxvzyqFN2kDbqOFUC44V7EOvjLgU9Y'
       }
     }
+    const response = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options)
+    const data = response.data
+
+    //Plockar ut och lägger in popularitet i en variabel med map så att jag får en array
+    const moviePopularity = data.results.map((movie) => {
+      return movie.vote_average
+    })
+    //Plockar ut och lägger in titlar i en variabel med map så att jag får en array
+    const movieTitles = data.results.map((movie) => {
+      return movie.title
+    })
+
+    /* Här skapar jag min chart */
+    //Hämtar in elementet där mitt diagram ska visas
+    const ctx = document.querySelector('#diagram');
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: movieTitles,
+        datasets: [{
+          label: 'Populäraste filmernas betyg just nu enligt TMDBs användare',
+          data: moviePopularity,
+          borderWidth: 1,
+          borderRadius: 3,
+          borderColor: 'rgba(13, 4, 7, 1)',
+          backgroundColor: 'rgba(91, 12, 18, 1)'
+        }]
+      },
+      responsive: true,
+      options: {
+        indexAxis: 'y',
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+          x: {
+            beginAtZero: true,
+            max: 10
+          }
+        }
+      }
+    })
   }
   catch (error) {
     console.error('Fel:', error)
   }
-} */
+}
+chart()
+
+const chart2 = async () => {
+  try {
+    const options = {
+      headers: {
+        accept: 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2ZjU2ZDkzZGUxNGUwNmY0M2ZjYWZlYzBjMmVkZDA1YiIsInN1YiI6IjY1NDEwNTAxMzNhNTMzMDE0ZDQ2YjdlZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-VhFqWT1Gq2DibxvzyqFN2kDbqOFUC44V7EOvjLgU9Y'
+      }
+    }
+
+    const response = await axios.get('https://api.themoviedb.org/3/movie/popular?language=en-US&page=2', options)
+    const data = response.data
+
+    const moviePopularity = data.results.map((movie) => {
+      return movie.vote_average
+    })
+    const movieTitles = data.results.map((movie) => {
+      return movie.title
+    })
+
+    const ctx = document.querySelector('#diagram2')
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: movieTitles,
+        datasets: [{
+          label: 'Populäraste filmernas betyg just nu enligt TMDBs användare',
+          data: moviePopularity,
+          borderWidth: 1,
+          borderRadius: 3,
+          borderColor: 'rgba(13, 4, 7, 1)',
+          backgroundColor: 'rgba(91, 12, 18, 1)'
+        }]
+      },
+      responsive: true,
+      options: {
+        indexAxis: 'y',
+        scales: {
+          y: {
+            beginAtZero: true,
+          },
+          x: {
+            beginAtZero: true,
+            max: 10
+          }
+        }
+      }
+    })
+  }
+  catch (error) {
+    console.error('Fel:', error)
+  }
+}
+chart2()
+
+const diagramWrapperDiv = document.querySelector('.diagram-wrapper2')
+const seeMoreBtn = document.querySelector('.see-more')
+
+const toggleShow = () => {
+  const style = window.getComputedStyle(diagramWrapperDiv)
+  if (style.display === 'none') {
+    diagramWrapperDiv.style.display = 'block'
+    seeMoreBtn.textContent = 'Göm filmer'
+  } else {
+    diagramWrapperDiv.style.display = 'none'
+    seeMoreBtn.textContent = 'Visa fler filmer'
+  }
+}
+seeMoreBtn.addEventListener('click', toggleShow)

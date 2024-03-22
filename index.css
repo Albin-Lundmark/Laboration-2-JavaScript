@@ -119,7 +119,8 @@ body {
 }
 
 #submit-btn,
-#forgot-pass {
+#forgot-pass,
+.delete-btn {
   background-color: var(--white-transparent);
   font-size: 1.3rem;
   padding: 0.25rem;
@@ -132,6 +133,7 @@ body {
   background-color: var(--white-transparent);
   font-size: 1.2rem;
   text-wrap: nowrap;
+  /* Ännu en gång säger validation att text-wrap inte finns */
   padding: 0.4rem 0.5rem 0.2rem 0.5rem;
   border-radius: 8px;
   cursor: pointer;
@@ -142,10 +144,18 @@ body {
 }
 
 #submit-btn:hover,
-#forgot-pass:hover {
+#forgot-pass:hover,
+.delete-btn:hover {
   color: var(--yellow);
   background-color: var(--grey);
   border: solid 0.15rem var(--yellow);
+}
+
+.delete-btn {
+  position: absolute;
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 #abort-btn:hover {
@@ -166,10 +176,12 @@ label {
   display: none;
   background-color: var(--white);
   color: var(--red);
+  padding: 0.2rem;
+  border-radius: 3px;
   position: absolute;
-  bottom: 20%;
-  left: 25%;
-
+  bottom: 12%;
+  left: 30%;
+  margin: 1rem;
 }
 
 #num-err {
@@ -177,6 +189,10 @@ label {
 }
 
 #txt-err {
+  display: none;
+}
+
+#UC-err {
   display: none;
 }
 
@@ -193,7 +209,7 @@ label {
   background-color: var(--red);
   transition: top 0.3s;
   text-wrap: nowrap;
-  text-shadow: 0 0 6px var(--black);
+  /* Ännu en gång säger validation att text-wrap inte finns */
   z-index: 99;
 }
 
@@ -228,6 +244,7 @@ label {
   font-size: 2rem;
   list-style: none;
   text-decoration: none;
+  text-shadow: 0 0 5px var(--black);
   color: var(--white);
   transition: ease-in-out 0.3s;
   cursor: pointer;
@@ -266,7 +283,6 @@ label {
 
 #search-bar:focus,
 #search-bar:hover {
-  transform: scale(105%);
   background-color: var(--grey-transparent);
 }
 
@@ -301,7 +317,6 @@ label {
 }
 
 #search-result>ul>li {
-
   padding: 0.25rem;
   border: solid 0.1rem var(--grey);
 }
@@ -361,6 +376,7 @@ main {
 #site-title {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: var(--white);
+  text-shadow: 0 5px 5px var(--black);
   padding-bottom: 2vh;
 }
 
@@ -404,7 +420,7 @@ main {
 }
 
 .poster-image:hover {
-  transform: scale(101%);
+  transform: scale(1.01);
 }
 
 .movie-title {
@@ -422,11 +438,47 @@ main {
 
 .diagram-wrapper {
   margin: auto;
+  background-color: var(--white-transparent);
+  height: 60vh;
+  width: 90vw;
+}
+
+#diagram,
+#diagram2 {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 1rem;
+}
+
+.see-more {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--white-transparent);
+  font-size: 1.1rem;
+  padding: 0.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: ease 200ms;
+  margin-bottom: 4vh;
+  margin-top: 4vh;
+}
+
+.see-more:hover {
+  color: var(--yellow);
+  background-color: var(--grey);
+}
+
+.diagram-wrapper2 {
+  display: none;
+  margin: auto;
   margin-bottom: 4vh;
   background-color: var(--white-transparent);
   height: 60vh;
-  width: 80vw;
+  width: 90vw;
 }
+
 
 /* 5. Footer med socials och information */
 
@@ -443,6 +495,10 @@ footer {
 .social {
   letter-spacing: 0.25rem;
   text-shadow: 0 0 5px var(--black);
+}
+
+.fa-brands {
+  overflow: hidden;
 }
 
 .fa-copyright {
@@ -473,13 +529,22 @@ footer {
 
   #login-btn,
   #submit-btn,
-  #forgot-pass {
+  #forgot-pass,
+  .delete-btn {
     font-size: 0.9rem;
   }
 
   #abort-btn {
     font-size: 0.9rem;
   }
+
+  .error {
+    left: 0;
+    bottom: 15vh;
+    font-size: 0.6rem;
+  }
+
+  /* Searchbar */
 
   .search-div {
     margin-right: 3vw;
@@ -497,6 +562,7 @@ footer {
   /* Länkar både i header och footer */
 
   .link {
+    text-shadow: 0 0 5px var(--black);
     font-size: 0.9rem;
   }
 
@@ -516,7 +582,11 @@ footer {
 
   .movie-title {
     font-size: 0.7rem;
+  }
 
+  .diagram-wrapper,
+  .diagram-wrapper2 {
+    height: auto;
   }
 
   /* 4. Footer */
@@ -534,3 +604,5 @@ footer {
     font-size: 1.7rem;
   }
 }
+
+/* All kod är validerad med W3C validation extension med 2 errors på min text-wrap: no-wrap */
